@@ -1,0 +1,11 @@
+apiVersion: netbird.io/v1alpha1
+kind: NetworkRouter
+metadata:
+  name: example-router
+  namespace: syn-netbird-operator
+spec:
+  dnsZoneRef:
+    name: example.com
+  logLevel: info
+  workloadOverride:
+    replicas: 2

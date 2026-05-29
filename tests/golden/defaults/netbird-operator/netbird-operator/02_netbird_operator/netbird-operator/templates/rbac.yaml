@@ -1,0 +1,232 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.5.0
+    helm.sh/chart: netbird-operator-0.5.0
+  name: netbird-operator
+rules:
+  - apiGroups:
+      - netbird.io
+    resources:
+      - nbsetupkeys
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - netbird.io
+    resources:
+      - nbsetupkeys/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - netbird.io
+    resources:
+      - nbsetupkeys/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - netbird.io
+    resources:
+      - nbgroups
+      - nbresources
+      - nbroutingpeers
+      - nbpolicies
+      - setupkeys
+      - groups
+      - networkrouters
+      - networkresources
+      - sidecarprofiles
+    verbs:
+      - get
+      - patch
+      - update
+      - list
+      - watch
+      - create
+      - delete
+  - apiGroups:
+      - netbird.io
+    resources:
+      - nbgroups/status
+      - nbresources/status
+      - nbroutingpeers/status
+      - nbpolicies/status
+      - setupkeys/status
+      - groups/status
+      - networkrouters/status
+      - networkresources/status
+      - sidecarprofiles/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - netbird.io
+    resources:
+      - nbgroups/finalizers
+      - nbresources/finalizers
+      - nbroutingpeers/finalizers
+      - nbpolicies/finalizers
+      - setupkeys/finalizers
+      - groups/finalizers
+      - networkrouters/finalizers
+      - networkresources/finalizers
+      - sidecarprofiles/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - ''
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+      - patch
+  - apiGroups:
+      - ''
+    resources:
+      - namespaces
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ''
+    resources:
+      - services/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+      - patch
+      - update
+      - list
+      - watch
+      - create
+      - delete
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ''
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ''
+    resources:
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+      - patch
+      - update
+      - create
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.5.0
+    helm.sh/chart: netbird-operator-0.5.0
+  name: netbird-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: netbird-operator
+subjects:
+  - kind: ServiceAccount
+    name: netbird-operator
+    namespace: syn-netbird-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.5.0
+    helm.sh/chart: netbird-operator-0.5.0
+  name: netbird-operator
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ''
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.5.0
+    helm.sh/chart: netbird-operator-0.5.0
+  name: netbird-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: netbird-operator
+subjects:
+  - kind: ServiceAccount
+    name: netbird-operator
+    namespace: syn-netbird-operator

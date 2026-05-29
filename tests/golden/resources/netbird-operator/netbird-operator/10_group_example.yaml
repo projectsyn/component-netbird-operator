@@ -1,0 +1,7 @@
+apiVersion: netbird.io/v1alpha1
+kind: Group
+metadata:
+  name: example
+  namespace: syn-netbird-operator
+spec:
+  name: example

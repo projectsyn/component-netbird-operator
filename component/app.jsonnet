@@ -3,7 +3,15 @@ local inv = kap.inventory();
 local params = inv.parameters.netbird_operator;
 local argocd = import 'lib/argocd.libjsonnet';
 
-local app = argocd.App('netbird-operator', params.namespace);
+local app = argocd.App('netbird-operator', params.namespace) {
+  spec+: {
+    syncPolicy+: {
+      syncOptions+: [
+        'ServerSideApply=true',
+      ],
+    },
+  },
+};
 
 local appPath =
   local project = std.get(std.get(app, 'spec', {}), 'project', 'syn');

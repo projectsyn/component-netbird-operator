@@ -1,0 +1,12 @@
+apiVersion: netbird.io/v1alpha1
+kind: SidecarProfile
+metadata:
+  name: example-sidecar
+  namespace: syn-netbird-operator
+spec:
+  injectionMode: Sidecar
+  podSelector:
+    matchLabels:
+      netbird: enabled
+  setupKeyRef:
+    name: example-setup-key

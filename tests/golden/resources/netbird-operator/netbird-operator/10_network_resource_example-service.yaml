@@ -1,0 +1,14 @@
+apiVersion: netbird.io/v1alpha1
+kind: NetworkResource
+metadata:
+  name: example-service
+  namespace: syn-netbird-operator
+spec:
+  groups:
+    - localRef:
+        name: example
+  networkRouterRef:
+    name: example-router
+    namespace: syn-netbird-operator
+  serviceRef:
+    name: example-service

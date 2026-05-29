@@ -1,5 +1,11 @@
 parameters:
   kapitan:
+    dependencies:
+      - type: helm
+        source: ${netbird_operator:charts:netbird-operator:source}
+        version: ${netbird_operator:charts:netbird-operator:version}
+        chart_name: netbird-operator
+        output_path: ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}
     compile:
       - input_paths:
           - ${_base_directory}/component/app.jsonnet
@@ -9,3 +15,13 @@ parameters:
           - ${_base_directory}/component/main.jsonnet
         input_type: jsonnet
         output_path: netbird-operator/
+      # netbird-operator Helm chart (ships CRDs in chart's crds/ dir)
+      - input_paths:
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}
+        input_type: helm
+        helm_values: ${netbird_operator:helm_values}
+        helm_params:
+          name: netbird-operator
+          namespace: ${netbird_operator:namespace}
+          include_crds: true
+        output_path: netbird-operator/02_netbird_operator

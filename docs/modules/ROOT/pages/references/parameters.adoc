@@ -2,6 +2,19 @@
 
 The parent key for all of the following parameters is `netbird_operator`.
 
+[NOTE]
+====
+The component exposes the `netbird.io/v1alpha1` API: `groups`, `network_resources`, `network_routers`, `setup_keys`, `sidecar_profiles`.
+This is the user-facing API documented in the https://github.com/netbirdio/kubernetes-operator/blob/main/README.md#api[upstream README] and used in the chart's `examples/`.
+
+All resource parameters follow the same pattern:
+
+* Dictionary keys are used as `metadata.name`
+* Resources are created in the component's namespace by default (via ArgoCD), overridable via `metadata.namespace`
+* Values are processed using https://syn.tools/commodore/reference/commodore-libjsonnet.html#_generateresourcesresources_resourcefn[`com.generateResources()`], which supports deep-merging and setting values to `null` for removal
+====
+
+
 == `namespace`
 
 [horizontal]
@@ -9,6 +22,142 @@ type:: string
 default:: `syn-netbird-operator`
 
 The namespace in which to deploy this component.
+
+
+== `namespace_labels`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Additional labels to add to the component's namespace.
+
+
+== `namespace_annotations`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Additional annotations to add to the component's namespace.
+
+
+== `charts`
+
+[horizontal]
+type:: dictionary
+default:: See https://github.com/projectsyn/component-netbird-operator/blob/master/class/defaults.yml[`class/defaults.yml`]
+
+The Helm chart source and version for the netbird-operator chart.
+
+
+== `api.secret_name`
+
+[horizontal]
+type:: string
+default:: `netbird-mgmt-api-key`
+
+Name of the Secret that holds the NetBird management API token.
+The component renders this Secret in the operator namespace and wires the chart to read from it via `helm_values.netbirdAPI.keyFromSecret.name`.
+
+
+== `api.secret_key`
+
+[horizontal]
+type:: string
+default:: `NB_API_KEY`
+
+Key inside the Secret that holds the API token value.
+The operator container references this key as an environment variable.
+
+
+== `api.token`
+
+[horizontal]
+type:: string
+default:: `?{vaultkv:${cluster:tenant}/${cluster:name}/netbird-operator/api-token}`
+
+The NetBird management API token.
+By default, the token is read from Vault at the path above.
+Override per cluster or tenant if the secret lives elsewhere.
+
+
+== `groups`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Defines `netbird.io/v1alpha1` Group resources.
+Groups are the user-facing abstraction for NetBird groups in the upstream chart documentation.
+
+
+== `network_resources`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Defines `netbird.io/v1alpha1` NetworkResource resources.
+NetworkResources expose a Kubernetes Service via a NetworkRouter onto the NetBird overlay.
+
+
+== `network_routers`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Defines `netbird.io/v1alpha1` NetworkRouter resources.
+NetworkRouters deploy the NetBird routing client to route traffic for NetworkResources.
+
+
+== `setup_keys`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Defines `netbird.io/v1alpha1` SetupKey resources.
+SetupKeys manage NetBird setup keys used to enroll peers and assign them to groups.
+
+
+== `sidecar_profiles`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Defines `netbird.io/v1alpha1` SidecarProfile resources.
+SidecarProfiles configure NetBird sidecar injection into application pods.
+
+
+== `rbac.aggregated_cluster_reader`
+
+[horizontal]
+type:: bool
+default:: `true`
+
+Whether to create a ClusterRole aggregated to `cluster-reader` that grants read access to all `netbird.io` CRDs.
+
+
+== `helm_values`
+
+[horizontal]
+type:: dictionary
+default::
++
+[source,yaml]
+----
+helm_values:
+  netbirdAPI:
+    keyFromSecret:
+      name: ${netbird_operator:api:secret_name}
+      key: ${netbird_operator:api:secret_key}
+----
+
+Helm values to pass to the netbird-operator Helm chart.
+See the https://github.com/netbirdio/kubernetes-operator/blob/main/charts/netbird-operator/values.yaml[upstream `values.yaml`] for available options.
 
 
 == Example
