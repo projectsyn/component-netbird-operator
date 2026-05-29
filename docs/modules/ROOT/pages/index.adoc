@@ -1,0 +1,5 @@
+= Kubernetes operator for Netbird
+
+netbird-operator is a Commodore component to manage Kubernetes operator for Netbird.
+
+See the xref:references/parameters.adoc[parameters] reference for further details.

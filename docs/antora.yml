@@ -1,0 +1,6 @@
+name: netbird-operator
+title: Kubernetes operator for Netbird
+version: master
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/partials/nav.adoc
