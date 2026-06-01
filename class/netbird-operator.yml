@@ -15,7 +15,21 @@ parameters:
           - ${_base_directory}/component/main.jsonnet
         input_type: jsonnet
         output_path: netbird-operator/
-      # netbird-operator Helm chart (ships CRDs in chart's crds/ dir)
+      # netbird-operator CRDs
+      - input_paths:
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_groups.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbgroups.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbpolicies.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbresources.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbroutingpeers.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbsetupkeys.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_networkresources.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_networkrouters.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_setupkeys.yaml
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_sidecarprofiles.yaml
+        input_type: copy
+        output_path: netbird-operator/01_crds
+      # netbird-operator Helm chart
       - input_paths:
           - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}
         input_type: helm
@@ -23,5 +37,5 @@ parameters:
         helm_params:
           name: netbird-operator
           namespace: ${netbird_operator:namespace}
-          include_crds: true
+          include_crds: false
         output_path: netbird-operator/02_netbird_operator
