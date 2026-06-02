@@ -35,6 +35,7 @@ local aggregatedClusterRole = {
   ],
 };
 
+local clusterProxies = com.generateResources(params.cluster_proxies, lib.ClusterProxy);
 local groups = com.generateResources(params.groups, lib.Group);
 local networkResources = com.generateResources(params.network_resources, lib.NetworkResource);
 local networkRouters = com.generateResources(params.network_routers, lib.NetworkRouter);
@@ -52,6 +53,9 @@ local sidecarProfiles = com.generateResources(params.sidecar_profiles, lib.Sidec
   '01_api_secret': apiSecret,
   [if params.rbac.aggregated_cluster_reader then '10_cluster_role']:
     aggregatedClusterRole,
+} + {
+  ['10_cluster_proxy_%s' % res.metadata.name]: res
+  for res in clusterProxies
 } + {
   ['10_group_%s' % res.metadata.name]: res
   for res in groups

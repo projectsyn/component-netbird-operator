@@ -1,5 +1,14 @@
 parameters:
   netbird_operator:
+    cluster_proxies:
+      example-proxy:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          apiServer: https://kubernetes.default.svc.cluster.local
+          clusterName: example
+          serviceAccountName: netbird-operator
+
     groups:
       example:
         metadata:

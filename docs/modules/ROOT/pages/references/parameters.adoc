@@ -4,8 +4,7 @@ The parent key for all of the following parameters is `netbird_operator`.
 
 [NOTE]
 ====
-The component exposes the `netbird.io/v1alpha1` API: `groups`, `network_resources`, `network_routers`, `setup_keys`, `sidecar_profiles`.
-This is the user-facing API documented in the https://github.com/netbirdio/kubernetes-operator/blob/main/README.md#api[upstream README] and used in the chart's `examples/`.
+The component exposes the `netbird.io/v1alpha1` API: `cluster_proxies`, `groups`, `network_resources`, `network_routers`, `setup_keys`, `sidecar_profiles`.
 
 All resource parameters follow the same pattern:
 
@@ -80,6 +79,16 @@ default:: `?{vaultkv:${cluster:tenant}/${cluster:name}/netbird-operator/api-toke
 The NetBird management API token.
 By default, the token is read from Vault at the path above.
 Override per cluster or tenant if the secret lives elsewhere.
+
+
+== `cluster_proxies`
+
+[horizontal]
+type:: dictionary
+default:: `{}`
+
+Defines `netbird.io/v1alpha1` ClusterProxy resources.
+ClusterProxies expose the Kubernetes API server through a NetBird peer so workloads outside the cluster can reach it over the NetBird overlay.
 
 
 == `groups`

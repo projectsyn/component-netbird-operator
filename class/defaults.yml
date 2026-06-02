@@ -7,7 +7,7 @@ parameters:
     charts:
       netbird-operator:
         source: oci://ghcr.io/netbirdio/helm-charts/netbird-operator
-        version: 0.5.0
+        version: 0.6.0
 
     namespace_labels: {}
     namespace_annotations: {}
@@ -19,6 +19,7 @@ parameters:
       token: ?{vaultkv:${cluster:tenant}/${cluster:name}/netbird-operator/api-token}
 
     # NetBird custom resources (netbird.io/v1alpha1)
+    cluster_proxies: {}
     groups: {}
     network_resources: {}
     network_routers: {}

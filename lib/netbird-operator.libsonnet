@@ -4,6 +4,14 @@
 
 local netbirdApiGroup = 'netbird.io';
 
+local ClusterProxy(name='') = {
+  apiVersion: '%s/v1alpha1' % netbirdApiGroup,
+  kind: 'ClusterProxy',
+  metadata: {
+    name: name,
+  },
+};
+
 local Group(name='') = {
   apiVersion: '%s/v1alpha1' % netbirdApiGroup,
   kind: 'Group',
@@ -45,6 +53,7 @@ local SidecarProfile(name='') = {
 };
 
 {
+  ClusterProxy: ClusterProxy,
   Group: Group,
   NetworkResource: NetworkResource,
   NetworkRouter: NetworkRouter,

@@ -1,0 +1,9 @@
+apiVersion: netbird.io/v1alpha1
+kind: ClusterProxy
+metadata:
+  name: example-proxy
+  namespace: syn-netbird-operator
+spec:
+  apiServer: https://kubernetes.default.svc.cluster.local
+  clusterName: example
+  serviceAccountName: netbird-operator

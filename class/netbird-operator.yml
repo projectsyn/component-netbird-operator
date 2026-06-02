@@ -17,6 +17,7 @@ parameters:
         output_path: netbird-operator/
       # netbird-operator CRDs
       - input_paths:
+          - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_clusterproxies.yaml
           - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_groups.yaml
           - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbgroups.yaml
           - ${_base_directory}/helmcharts/netbird-operator/${netbird_operator:charts:netbird-operator:version}/crds/netbird.io_nbpolicies.yaml
