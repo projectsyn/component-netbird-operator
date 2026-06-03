@@ -1,0 +1,14 @@
+apiVersion: netbird.io/v1alpha1
+kind: SetupKey
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: example-setup-key
+  namespace: syn-netbird-operator
+spec:
+  allowExtraDnsLabels: false
+  autoGroups:
+    - localRef:
+        name: example
+  ephemeral: false
+  name: example-setup-key

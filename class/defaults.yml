@@ -3,3 +3,34 @@ parameters:
     =_metadata:
       multi_tenant: true
     namespace: syn-netbird-operator
+
+    charts:
+      netbird-operator:
+        source: oci://ghcr.io/netbirdio/helm-charts/netbird-operator
+        version: 0.6.0
+
+    namespace_labels: {}
+    namespace_annotations: {}
+
+    # NetBird management API credentials
+    api:
+      secret_name: netbird-mgmt-api-key
+      secret_key: NB_API_KEY
+      token: ?{vaultkv:${cluster:tenant}/${cluster:name}/netbird-operator/api-token}
+
+    # NetBird custom resources (netbird.io/v1alpha1)
+    cluster_proxies: {}
+    groups: {}
+    network_resources: {}
+    network_routers: {}
+    setup_keys: {}
+    sidecar_profiles: {}
+
+    rbac:
+      aggregated_cluster_reader: true
+
+    helm_values:
+      netbirdAPI:
+        keyFromSecret:
+          name: ${netbird_operator:api:secret_name}
+          key: ${netbird_operator:api:secret_key}

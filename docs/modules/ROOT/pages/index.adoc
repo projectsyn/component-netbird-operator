@@ -2,4 +2,11 @@
 
 netbird-operator is a Commodore component to manage Kubernetes operator for Netbird.
 
+== Prerequisites
+
+The netbird-operator chart requires https://cert-manager.io[cert-manager] to be installed in the cluster.
+cert-manager provisions the TLS certificate used by the operator's admission webhook.
+To opt out and provide certificates manually, set `helm_values.webhook.enableCertManager` to `false` and supply `helm_values.webhook.tls`.
+See the https://github.com/netbirdio/kubernetes-operator/blob/main/charts/netbird-operator/values.yaml[chart `values.yaml`] for the expected TLS value shape.
+
 See the xref:references/parameters.adoc[parameters] reference for further details.

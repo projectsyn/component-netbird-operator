@@ -1,0 +1,66 @@
+parameters:
+  netbird_operator:
+    cluster_proxies:
+      example-proxy:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          apiServer: https://kubernetes.default.svc.cluster.local
+          clusterName: example
+          serviceAccountName: netbird-operator
+
+    groups:
+      example:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          name: example
+
+    network_routers:
+      example-router:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          dnsZoneRef:
+            name: example.com
+          logLevel: info
+          workloadOverride:
+            replicas: 2
+
+    network_resources:
+      example-service:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          networkRouterRef:
+            name: example-router
+            namespace: syn-netbird-operator
+          serviceRef:
+            name: example-service
+          groups:
+            - localRef:
+                name: example
+
+    setup_keys:
+      example-setup-key:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          name: example-setup-key
+          ephemeral: false
+          allowExtraDnsLabels: false
+          autoGroups:
+            - localRef:
+                name: example
+
+    sidecar_profiles:
+      example-sidecar:
+        metadata:
+          namespace: syn-netbird-operator
+        spec:
+          setupKeyRef:
+            name: example-setup-key
+          injectionMode: Sidecar
+          podSelector:
+            matchLabels:
+              netbird: enabled

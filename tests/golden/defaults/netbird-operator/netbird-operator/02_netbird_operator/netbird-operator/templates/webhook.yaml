@@ -1,0 +1,72 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: syn-netbird-operator/netbird-operator-serving-cert
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.6.0
+    helm.sh/chart: netbird-operator-0.6.0
+  name: netbird-operator-mpod-webhook
+webhooks:
+  - admissionReviewVersions:
+      - v1
+    clientConfig:
+      service:
+        name: netbird-operator-webhook-service
+        namespace: syn-netbird-operator
+        path: /mutate--v1-pod
+    failurePolicy: Fail
+    name: mpod-v1.netbird.io
+    objectSelector:
+      matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: NotIn
+          values:
+            - netbird-operator
+    rules:
+      - apiGroups:
+          - ''
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+        resources:
+          - pods
+    sideEffects: None
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.6.0
+    helm.sh/chart: netbird-operator-0.6.0
+  name: netbird-operator-serving-cert
+  namespace: syn-netbird-operator
+spec:
+  dnsNames:
+    - netbird-operator-webhook-service.syn-netbird-operator.svc
+    - netbird-operator-webhook-service.syn-netbird-operator.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: netbird-operator-selfsigned-issuer
+  secretName: netbird-operator-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    app.kubernetes.io/instance: netbird-operator
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: netbird-operator
+    app.kubernetes.io/version: v0.6.0
+    helm.sh/chart: netbird-operator-0.6.0
+  name: netbird-operator-selfsigned-issuer
+  namespace: syn-netbird-operator
+spec:
+  selfSigned: {}
