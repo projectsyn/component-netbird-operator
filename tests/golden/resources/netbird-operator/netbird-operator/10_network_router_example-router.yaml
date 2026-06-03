@@ -1,6 +1,8 @@
 apiVersion: netbird.io/v1alpha1
 kind: NetworkRouter
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: example-router
   namespace: syn-netbird-operator
 spec:

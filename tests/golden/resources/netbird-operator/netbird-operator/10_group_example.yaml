@@ -1,6 +1,8 @@
 apiVersion: netbird.io/v1alpha1
 kind: Group
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: example
   namespace: syn-netbird-operator
 spec:

@@ -1,6 +1,8 @@
 apiVersion: netbird.io/v1alpha1
 kind: ClusterProxy
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: example-proxy
   namespace: syn-netbird-operator
 spec:

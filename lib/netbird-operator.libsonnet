@@ -9,6 +9,9 @@ local ClusterProxy(name='') = {
   kind: 'ClusterProxy',
   metadata: {
     name: name,
+    annotations: {
+      'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+    },
   },
 };
 
@@ -17,6 +20,9 @@ local Group(name='') = {
   kind: 'Group',
   metadata: {
     name: name,
+    annotations: {
+      'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+    },
   },
 };
 
@@ -25,6 +31,9 @@ local NetworkResource(name='') = {
   kind: 'NetworkResource',
   metadata: {
     name: name,
+    annotations: {
+      'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+    },
   },
 };
 
@@ -33,6 +42,9 @@ local NetworkRouter(name='') = {
   kind: 'NetworkRouter',
   metadata: {
     name: name,
+    annotations: {
+      'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+    },
   },
 };
 
@@ -41,6 +53,9 @@ local SetupKey(name='') = {
   kind: 'SetupKey',
   metadata: {
     name: name,
+    annotations: {
+      'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+    },
   },
 };
 
@@ -49,6 +64,9 @@ local SidecarProfile(name='') = {
   kind: 'SidecarProfile',
   metadata: {
     name: name,
+    annotations: {
+      'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+    },
   },
 };
 
