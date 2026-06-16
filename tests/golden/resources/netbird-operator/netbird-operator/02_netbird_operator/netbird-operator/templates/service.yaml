@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/instance: netbird-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: netbird-operator
-    app.kubernetes.io/version: v0.6.0
-    helm.sh/chart: netbird-operator-0.6.0
+    app.kubernetes.io/version: v0.7.0
+    helm.sh/chart: netbird-operator-0.7.0
   name: netbird-operator-metrics
 spec:
   ports:
@@ -26,8 +26,8 @@ metadata:
     app.kubernetes.io/instance: netbird-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: netbird-operator
-    app.kubernetes.io/version: v0.6.0
-    helm.sh/chart: netbird-operator-0.6.0
+    app.kubernetes.io/version: v0.7.0
+    helm.sh/chart: netbird-operator-0.7.0
   name: netbird-operator-webhook-service
 spec:
   ports:
