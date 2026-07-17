@@ -7,7 +7,7 @@ parameters:
     charts:
       netbird-operator:
         source: oci://ghcr.io/netbirdio/helm-charts/netbird-operator
-        version: 0.7.0
+        version: 0.8.0
 
     namespace_labels: {}
     namespace_annotations: {}
