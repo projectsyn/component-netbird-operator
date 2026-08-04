@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/instance: netbird-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: netbird-operator
-    app.kubernetes.io/version: v0.7.0
-    helm.sh/chart: netbird-operator-0.7.0
+    app.kubernetes.io/version: v0.8.0
+    helm.sh/chart: netbird-operator-0.8.0
   name: netbird-operator
 rules:
   - apiGroups:
@@ -42,6 +42,7 @@ rules:
       - groups
       - networkrouters
       - networkresources
+      - networkegresses
       - sidecarprofiles
       - clusterproxies
     verbs:
@@ -63,6 +64,7 @@ rules:
       - groups/status
       - networkrouters/status
       - networkresources/status
+      - networkegresses/status
       - sidecarprofiles/status
       - clusterproxies/status
     verbs:
@@ -80,19 +82,60 @@ rules:
       - groups/finalizers
       - networkrouters/finalizers
       - networkresources/finalizers
+      - networkegresses/finalizers
       - sidecarprofiles/finalizers
     verbs:
       - update
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs:
+      - get
+      - patch
+      - update
+      - list
+      - watch
+      - create
+      - delete
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - roles
+      - rolebindings
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ''
+    resources:
+      - configmaps
+      - serviceaccounts
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
   - apiGroups:
       - ''
     resources:
       - services
     verbs:
       - get
+      - patch
+      - update
       - list
       - watch
-      - update
-      - patch
+      - create
+      - delete
   - apiGroups:
       - ''
     resources:
@@ -159,8 +202,8 @@ metadata:
     app.kubernetes.io/instance: netbird-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: netbird-operator
-    app.kubernetes.io/version: v0.7.0
-    helm.sh/chart: netbird-operator-0.7.0
+    app.kubernetes.io/version: v0.8.0
+    helm.sh/chart: netbird-operator-0.8.0
   name: netbird-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -178,22 +221,10 @@ metadata:
     app.kubernetes.io/instance: netbird-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: netbird-operator
-    app.kubernetes.io/version: v0.7.0
-    helm.sh/chart: netbird-operator-0.7.0
+    app.kubernetes.io/version: v0.8.0
+    helm.sh/chart: netbird-operator-0.8.0
   name: netbird-operator
 rules:
-  - apiGroups:
-      - ''
-    resources:
-      - configmaps
-    verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - patch
-      - delete
   - apiGroups:
       - coordination.k8s.io
     resources:
@@ -221,8 +252,8 @@ metadata:
     app.kubernetes.io/instance: netbird-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: netbird-operator
-    app.kubernetes.io/version: v0.7.0
-    helm.sh/chart: netbird-operator-0.7.0
+    app.kubernetes.io/version: v0.8.0
+    helm.sh/chart: netbird-operator-0.8.0
   name: netbird-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
